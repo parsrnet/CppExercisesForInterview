@@ -5,7 +5,7 @@
 using namespace std;
 
 /*
-	If you know how a Stack works, there is very little to say here. This is a bare-minimum stack container with the ability to reverse for 
+	If you know how a Stack works, there is very little to say here. This is a bare-minimum stack container. 
 */
 
 // Constructors //

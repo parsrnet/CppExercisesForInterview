@@ -15,6 +15,15 @@ Node::Node(string _title, string _author, string _isbn)
 	titleRight = titleLeft = nullptr;
 }
 
+// Default destructor
+Node::~Node()
+{
+	if (titleLeft)
+		delete titleLeft;
+	if (titleRight)
+		delete titleRight;
+}
+
 // Getters
 
 // Get title

@@ -49,5 +49,6 @@ int main(int argc, char* argv[])
 	if (search2)
 		cout << "FOUND : " << search2->GetTitle() << " by " << search2->GetAuthor() << " (ISBN" << search2->GetISBN() << ")" << endl;
 
+	getchar();
 	return 0;
 }

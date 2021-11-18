@@ -4,6 +4,7 @@
 
 #include "Stack.h"
 #include "RPNCalculator.h"
+
 // By Joshua M. Willis
 
 /*

@@ -12,6 +12,13 @@ BinaryLookupTree::BinaryLookupTree()
 	root = nullptr;
 }
 
+// Destructor //
+BinaryLookupTree::~BinaryLookupTree()
+{
+	if (root != nullptr)
+		delete root;
+}
+
 // Inserter functions //
 
 // This is our main inserter function which will be exposed to the user.

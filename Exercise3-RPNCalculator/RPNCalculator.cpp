@@ -11,6 +11,11 @@ RPNCalculator::RPNCalculator(const char* input)
 	bufIndex = 0;
 }
 
+// Destructor function //
+RPNCalculator::~RPNCalculator()
+{
+}
+
 // Helper function to determine if char c is a number (0-9)
 bool RPNCalculator::isNumber(char c)
 {

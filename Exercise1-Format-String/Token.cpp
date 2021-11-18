@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Default constructor.
+// Default constructor //
 Token::Token()
 {
 	lookupText = "";
@@ -14,13 +14,20 @@ Token::Token()
 	last = nullptr;
 }
 
-// Constructor
+// Constructor //
 Token::Token(string _lookupText, string _replacementText, Token* _last)
 {
 	lookupText = _lookupText;
 	replacementText = _replacementText;
 
 	last = _last;
+}
+
+// Destructor //
+Token::~Token()
+{
+	if (last != nullptr)
+		delete last;
 }
 
 // Recursive replace function.

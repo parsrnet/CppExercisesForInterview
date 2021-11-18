@@ -1,3 +1,4 @@
+#pragma once
 #define MAX_STACK_SIZE 1024
 
 class Stack

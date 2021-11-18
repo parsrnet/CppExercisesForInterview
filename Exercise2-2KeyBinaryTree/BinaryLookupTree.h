@@ -13,10 +13,9 @@ protected:
 
 public:
 	BinaryLookupTree();
+	~BinaryLookupTree();
 
 	void insert(Node* newNode);
-
-	void print();
 
 	Node* findByTitle(const std::string& searchTerm);
 	Node* findByISBN(const std::string& search);

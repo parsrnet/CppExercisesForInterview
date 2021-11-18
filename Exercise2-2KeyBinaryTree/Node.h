@@ -7,7 +7,8 @@ protected:
 public:
 	Node* titleLeft, * titleRight, * isbnLeft, * isbnRight;
 
-	Node(std::string title, std::string auth, std::string isbn); // Default Constructor
+	Node(std::string title, std::string auth, std::string isbn);
+	~Node();
 	
 	// Getters
 	std::string GetTitle();

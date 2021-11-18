@@ -20,7 +20,7 @@ protected:
 
 public:
 	RPNCalculator(const char* input);
+	~RPNCalculator();
 
 	int calculate();
-
 };
