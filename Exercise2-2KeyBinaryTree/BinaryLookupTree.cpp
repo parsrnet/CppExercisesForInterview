@@ -1,60 +1,34 @@
 #include <string>
 #include <iostream>
-#include <cstdlib>
 
 #include "Node.h"
 #include "BinaryLookupTree.h"
 
 using namespace std;
 
-// Constructor functions //
+// Constructor //
 BinaryLookupTree::BinaryLookupTree()
 {
-	this->root = nullptr;
-}
-
-// Helper functions //
-void BinaryLookupTree::print(Node* n)
-{
-	if (n != nullptr)
-	{
-		printf("TITLE: %s | AUTH: %s | ISBN: %s\n",
-			n->GetTitle().c_str(), n->GetAuthor().c_str(), n->GetISBN().c_str());
-
-		if (n->isbnLeft != nullptr)
-		{
-			printf("LEFT> ");
-			this->print(n->isbnLeft);
-		}
-
-		if (n->isbnRight != nullptr)
-		{
-			printf("RIGHT> ");
-			this->print(n->isbnRight);
-		}
-	}
-}
-
-void BinaryLookupTree::print()
-{
-	if (this->root != nullptr)
-		this->print(this->root);
+	root = nullptr;
 }
 
 // Inserter functions //
+
+// This is our main inserter function which will be exposed to the user.
 void BinaryLookupTree::insert(Node* newNode)
 {
-	if (this->root == nullptr)
+	if (root == nullptr)
 	{
-		this->root = newNode;
+		root = newNode;
 	}
 	else
 	{
-		this->insertByTitle(newNode, root);
-		this->insertByISBN(newNode, root);
+		insertByTitle(newNode, root);
+		insertByISBN(newNode, root);
 	}
 }
 
+// This is a helper function which inserts the node into the tree by title.
 void BinaryLookupTree::insertByTitle(Node* newNode, Node* parentNode)
 {
 	if (parentNode != nullptr)
@@ -66,14 +40,14 @@ void BinaryLookupTree::insertByTitle(Node* newNode, Node* parentNode)
 			if (parentNode->titleRight == nullptr)
 				parentNode->titleRight = newNode;
 			else
-				this->insertByTitle(newNode, parentNode->titleRight);
+				insertByTitle(newNode, parentNode->titleRight);
 		}
 		else if (parNodeTitle.compare(newNodeTitle) < 0)
 		{
 			if (parentNode->titleLeft == nullptr)
 				parentNode->titleLeft = newNode;
 			else
-				this->insertByTitle(newNode, parentNode->titleLeft);
+				insertByTitle(newNode, parentNode->titleLeft);
 		}
 		else
 		{
@@ -82,6 +56,7 @@ void BinaryLookupTree::insertByTitle(Node* newNode, Node* parentNode)
 	}
 }
 
+// And this is the corresponding helper function, inserting and sorting the node by ISBN.
 void BinaryLookupTree::insertByISBN(Node* newNode, Node* parentNode)
 {
 	if (parentNode != nullptr)
@@ -93,14 +68,14 @@ void BinaryLookupTree::insertByISBN(Node* newNode, Node* parentNode)
 			if (parentNode->isbnRight == nullptr)
 				parentNode->isbnRight = newNode;
 			else
-				this->insertByISBN(newNode, parentNode->isbnRight);
+				insertByISBN(newNode, parentNode->isbnRight);
 		}
 		else if (parNodeISBN.compare(newNodeISBN) < 0)
 		{
 			if (parentNode->isbnLeft == nullptr)
 				parentNode->isbnLeft = newNode;
 			else
-				this->insertByISBN(newNode, parentNode->isbnLeft);
+				insertByISBN(newNode, parentNode->isbnLeft);
 		}
 		else
 		{
@@ -110,50 +85,56 @@ void BinaryLookupTree::insertByISBN(Node* newNode, Node* parentNode)
 }
 
 // Search functions //
+
+// This is the recursive solution to finding a node by title.
 Node* BinaryLookupTree::rFindByTitle(Node* n, const std::string& searchTerm)
 {
 	if (n != nullptr)
 	{
 		string nodeTitle = n->GetTitle();
 		if (nodeTitle.compare(searchTerm) > 0)
-			return this->rFindByTitle(n->titleRight, searchTerm);
+			return rFindByTitle(n->titleRight, searchTerm);
 		else if (nodeTitle.compare(searchTerm) < 0)
-			return this->rFindByTitle(n->titleLeft, searchTerm);
+			return rFindByTitle(n->titleLeft, searchTerm);
 		else
 			return n;
 	}
 	return nullptr;
 }
 
+// And the corresponding recursive solution to finding a node by ISBN.
 Node* BinaryLookupTree::rFindByISBN(Node* n, const std::string& searchTerm)
 {
 	if (n != nullptr)
 	{
 		string nodeISBN = n->GetISBN();
 		if (nodeISBN.compare(searchTerm) > 0)
-			return this->rFindByISBN(n->isbnRight, searchTerm);
+			return rFindByISBN(n->isbnRight, searchTerm);
 		else if (nodeISBN.compare(searchTerm) < 0)
-			return this->rFindByISBN(n->isbnLeft, searchTerm);
+			return rFindByISBN(n->isbnLeft, searchTerm);
 		else
 			return n;
 	}
 	return nullptr;
 }
 
+
+// And because we do not want to expose the 'root' node to the user, we implement this function so that the root node and recursive lookup functions are encapsulated
 Node* BinaryLookupTree::findByTitle(const std::string& searchTerm)
 {
 	if (root != nullptr)
 	{
-		return this->rFindByTitle(root, searchTerm);
+		return rFindByTitle(root, searchTerm);
 	}
 	return nullptr;
 }
 
+// More of the same except for searching by ISBN instead of Title.
 Node* BinaryLookupTree::findByISBN(const std::string& searchTerm)
 {
 	if (root != nullptr)
 	{
-		return this->rFindByISBN(root, searchTerm);
+		return rFindByISBN(root, searchTerm);
 	}
 	return nullptr;
 }

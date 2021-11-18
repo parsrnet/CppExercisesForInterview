@@ -5,14 +5,14 @@
 using namespace std;
 
 // Default Constructor
-Node::Node(string title, string auth, string isbn)
+Node::Node(string _title, string _author, string _isbn)
 {
-	this->title = title;
-	this->author = auth;
-	this->isbn = isbn;
+	title = _title;
+	author = _author;
+	isbn = _isbn;
 
-	this->titleLeft = this->isbnLeft = nullptr;
-	this->titleRight = this->titleLeft = nullptr;
+	titleLeft = isbnLeft = nullptr;
+	titleRight = titleLeft = nullptr;
 }
 
 // Getters
@@ -20,17 +20,17 @@ Node::Node(string title, string auth, string isbn)
 // Get title
 string Node::GetTitle()
 {
-	return this->title;
+	return title;
 }
 
 // Get author
 string Node::GetAuthor()
 {
-	return this->author;
+	return author;
 }
 
 // Get ISBN
 string Node::GetISBN()
 {
-	return this->isbn;
+	return isbn;
 }

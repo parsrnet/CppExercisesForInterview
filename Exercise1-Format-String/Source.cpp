@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <cstdlib>
 #include <iostream>
-#include <cstdarg>
 #include <string>
 
 #include "Token.h"
@@ -35,11 +32,16 @@
 	corresponding replacementText.
 
 	Here, I implement a standard reverse linked node list, where the nodes are called Tokens which hold a look-up key value and a replacement value.
-		If I were not to constrain myself by avoiding premade container objects, I would simply use a lookup dictionary.
+	We can traverse down the nodes and use a recursive replacement solution to ensure that all instances of lookupText are correctly replaced with the replacement value.
+	
+	If I were not to constrain myself by avoiding premade container objects, I would simply use a <map> and match corresponding keys with the map's value at that index.
 */
 
 using namespace std;
 
+// This initial function is responsible for breaking our arguments data into parsed key-value pairs (lookup -> replacement)
+// size_t argumentCount: Amount of arguments to handle
+// char* args[]: Array of arguments to convert into tokens
 Token* tokenizeArguments(size_t argumentCount, char* args[])
 {
 	// Token** tokens = new Token*[argCount];
@@ -53,8 +55,7 @@ Token* tokenizeArguments(size_t argumentCount, char* args[])
 
 		if (argSplitPos == string::npos)
 		{
-			cerr << "Encountered malformed argument ... " << curArg << endl;
-			cerr << "Argument missing = token" << endl;
+			cerr << "Encountered malformed argument ... " << curArg << endl << "Argument missing '=' token" << endl;
 			didError = true;
 		}
 		else
@@ -74,6 +75,9 @@ Token* tokenizeArguments(size_t argumentCount, char* args[])
 	return last;
 }
 
+// This is the actual function used to interpolate the given string into its correct format (all lookup values replaced with replacement values)
+// const string& input: Input string
+// Token* rootToken: Head token
 string interpolateString(const string& input, Token* rootToken)
 {
 	string interpolated = input;

@@ -11,8 +11,6 @@ protected:
 	Node* rFindByTitle(Node* n, const std::string& searchTerm);
 	Node* rFindByISBN(Node* n, const std::string& searchTerm);
 
-	void print(Node* n);
-
 public:
 	BinaryLookupTree();
 

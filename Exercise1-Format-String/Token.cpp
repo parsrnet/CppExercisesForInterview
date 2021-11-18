@@ -11,15 +11,16 @@ Token::Token()
 {
 	lookupText = "";
 	replacementText = "";
+	last = nullptr;
 }
 
 // Constructor
-Token::Token(string lookupText, string replacementText, Token* last)
+Token::Token(string _lookupText, string _replacementText, Token* _last)
 {
-	this->lookupText = lookupText;
-	this->replacementText = replacementText;
+	lookupText = _lookupText;
+	replacementText = _replacementText;
 
-	this->last = last;
+	last = _last;
 }
 
 // Recursive replace function.
@@ -27,7 +28,7 @@ Token::Token(string lookupText, string replacementText, Token* last)
 // str: String to replace instances of lookupText with replacementText
 string Token::replace(string str)
 {
-	size_t firstPos = str.find(this->lookupText);
+	size_t firstPos = str.find(lookupText);
 	if (firstPos != string::npos)
 	{
 		return replace(str.replace(firstPos, lookupText.length(), replacementText));
@@ -39,11 +40,11 @@ string Token::replace(string str)
 // Iteratively replace each of instance of lookupText with replacementText in string str
 string Token::ireplace(string str)
 {
-	size_t firstPos = str.find(this->lookupText);
+	size_t firstPos = str.find(lookupText);
 	while (firstPos != string::npos)
 	{
 		str = str.replace(firstPos, lookupText.length(), replacementText);
-		firstPos = str.find(this->lookupText);
+		firstPos = str.find(lookupText);
 	}
 	return str;
 }

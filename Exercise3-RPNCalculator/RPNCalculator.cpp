@@ -3,93 +3,96 @@
 #include "Stack.h"
 #include "RPNCalculator.h"
 
+// Constructor function //
 RPNCalculator::RPNCalculator(const char* input)
 {
-	this->stack = Stack();
-	this->toParse = input;
-	this->toParseIdx = 0;
+	stack = Stack();
+	buffer = input;
+	bufIndex = 0;
 }
 
+// Helper function to determine if char c is a number (0-9)
 bool RPNCalculator::isNumber(char c)
 {
 	return (c >= '0' && c <= '9');
 }
 
+// Another helper function used to determine if char c is an operator (defined in RPNCalculator.h)
 bool RPNCalculator::isOperator(char c)
 {
-	for (int i = 0; this->operators[i] != '\0'; i++)
+	for (int i = 0; operators[i] != '\0'; i++)
 		if (c == operators[i])
 			return true;
 	return false;
 }
 
+// Peek function, so that we can look at the current letter in the buffer.
 char RPNCalculator::peek()
 {
-	return this->toParse[this->toParseIdx];
+	return buffer[bufIndex];
 }
 
+// Next function, so that we can advance the buffer
 char RPNCalculator::next()
 {
-	return this->toParse[++this->toParseIdx];
+	return buffer[++bufIndex];
 }
 
+// Once we encounter a number in our buffer, we can call this function to parse the full number and push the integer form onto the stack.
 int RPNCalculator::parseNumber()
 {
 	int n = 0;
-	char curChar = this->peek();
-	while (this->isNumber(curChar))
+	char curChar = peek();
+	while (isNumber(curChar))
 	{
 		n *= 10;
 		int toInteger = curChar - '0';
 		n += toInteger;
-		curChar = this->next();
+		curChar = next();
 	}
-	this->stack.push(n);
+	stack.push(n);
 	return n;
 }
 
+// Like numbers, operators are important for the calculator functionality. Once we encounter an operator in the buffer, we want to pop() the two last numbers and preform a mathematical operation
+//	on them, then push that result onto the stack
 int RPNCalculator::parseOperator()
 {
-	char op = this->peek();
-	int rhs = this->stack.pop(), lhs = this->stack.pop();
+	char op = peek();
+	int rhs = stack.pop(), lhs = stack.pop();
 
 	if (op == '+')
-		this->stack.push(lhs + rhs);
+		stack.push(lhs + rhs);
 	else if (op == '-')
-		this->stack.push(lhs - rhs);
+		stack.push(lhs - rhs);
 	else if (op == '*')
-		this->stack.push(lhs * rhs);
+		stack.push(lhs * rhs);
 	else if (op == '/')
-		this->stack.push(lhs / rhs);
+		stack.push(lhs / rhs);
 	else if (op == '^')
 	{
 		int result = lhs;
 		for (int i = 1; i < rhs; i++)
 			result *= lhs;
-		this->stack.push(result);
+		stack.push(result);
 	}
 
-	return this->stack.peek();
+	return stack.peek();
 }
 
+// This function will cause the calculator to run until it exhausts its buffer and return the result as an integer.
 int RPNCalculator::calculate()
 {
-	char curChar = this->peek();
+	char curChar = peek();
 	while (curChar != '\0')
 	{
-		if (this->isNumber(curChar))
-		{
-			int i = this->parseNumber();
-			std::cout << "Parsing number " << i << std::endl;
-		}
-		else if (this->isOperator(curChar))
-		{
-			int i = this->parseOperator();
-			std::cout << "Parsing operator " << i << std::endl;
-		}
+		if (isNumber(curChar))
+			int i = parseNumber();
+		else if (isOperator(curChar))
+			int i = parseOperator();
 
-		curChar = this->next();
+		curChar = next();
 	}
 
-	return this->stack.pop();
+	return stack.pop();
 }

@@ -4,8 +4,8 @@ class RPNCalculator
 {
 protected:
 	Stack stack;
-	const char* toParse;
-	unsigned int toParseIdx;
+	const char* buffer;
+	unsigned int bufIndex;
 
 	const char* operators = "+-*/^";
 

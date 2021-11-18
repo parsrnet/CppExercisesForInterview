@@ -14,7 +14,7 @@ public:
 	Token* last;
 
 	Token();
-	Token(std::string _lookupText, std::string  _replacementText, Token* last=nullptr);
+	Token(std::string _lookupText, std::string _replacementText, Token* last=nullptr);
 
 	std::string replace(std::string str);
 	std::string ireplace(std::string str);

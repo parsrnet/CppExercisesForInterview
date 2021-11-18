@@ -16,10 +16,12 @@
 
 	I will only be dealing with integers initially and implementing a basic set of mathematical functions, such as addition, subtraction, multiplication, division, and raising to the nth power.
 
-	I can immediately identify that a Stack structure is the most appropriate container. It gives us the ability to advance, peek, and pop
-		
+	I can immediately identify that a Stack structure is the most appropriate container. It gives us the ability to advance, peek, and pop.
 
+	When we consider how an RPN calculator works, we can think of each number as an operation pushing itself onto a stack. When we encounter an operator, we will preform a function
+		on the two most recent entries to the stack, one being the left-hand side and one being the right-hand side.
 
+	Beyond that, an RPN calculator is a very simple and quick yet powerful tool when programmed correctly.
 */
 
 using namespace std;
@@ -28,10 +30,18 @@ int main(int argc, char* argv[])
 {
 	Stack S = Stack();
 
-	RPNCalculator calc = RPNCalculator("300 3 /");
+	if (argc > 1)
+	{
+		RPNCalculator calc = RPNCalculator(argv[1]);
 
-	cout << calc.calculate() << endl;
-
+		cout << "CALCULATING " << argv[1] << endl << calc.calculate() << endl;
+	}
+	else
+	{
+		cerr << "Missing argument. Cannot calculate." << endl;
+		exit(1);
+	}
+	cout << "Press enter to continue...";
 	getchar();
 	return 0;
 }

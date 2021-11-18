@@ -4,18 +4,22 @@
 
 using namespace std;
 
+/*
+	If you know how a Stack works, there is very little to say here. This is a bare-minimum stack container with the ability to reverse for 
+*/
+
 // Constructors //
-Stack::Stack(size_t size)
+Stack::Stack(size_t _size)
 {
-	this->stack = new int[size];
-	this->size = size;
-	this->topIdx = 0;
+	stack = new int[_size];
+	size = _size;
+	topIdx = 0;
 }
 
-// Pushing 
+// Pushing  //
 void Stack::push(int newVal)
 {
-	if (this->topIdx < this->size)
+	if (topIdx < size)
 	{
 		stack[topIdx++] = newVal;
 	}
@@ -33,36 +37,18 @@ int Stack::peek()
 	return stack[topIdx - 1];
 }
 
-// Getters //
+// Getters and Helpers //
 bool Stack::isEmpty()
 {
-	return this->topIdx == 0;
+	return topIdx == 0;
 }
 
 bool Stack::isFull()
 {
-	return this->topIdx == this->size - 1;
+	return topIdx == size - 1;
 }
 
 size_t Stack::getCount()
 {
-	return this->topIdx;
-}
-
-// Swapping //
-void Stack::swap(unsigned int idxA, unsigned int idxB)
-{
-	if (idxA >= 0 && idxA <= this->topIdx && idxB >= 0 && idxB <= this->topIdx && idxA != idxB)
-	{
-		int tempA = this->stack[idxA];
-		this->stack[idxA] = stack[idxB];
-		this->stack[idxB] = tempA;
-	}
-}
-
-// Reverse function //
-void Stack::reverse()
-{
-	for (int i = 0; i < (int) this->getCount() / 2; i++)
-		swap(i, this->getCount() - 1 - i);
+	return topIdx;
 }
